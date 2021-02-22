@@ -4,7 +4,7 @@ This repository is a scientific product and is not official communication of the
 
 -------------------------------------------------------------------------------
 # IWXXM-US Modelling
-This repository hosts an [Enterprise Architect](https://sparxsystems.com/enterprise-architect/index.html) (EA) project file containing the IWXXM-US Unified Modeling Language (UML) model. From this project file, IWXXM-US [schemas](https://nws.weather.gov/schemas/IWXXM-US) and documentation are created from Enterprise Architect. In addition to the project file, a python script with associated configuration files, specific to each product schema, are needed to 'post-process' the EA output to generate the final form of the schemas before posting to the IWXXM-US website.
+This repository hosts an [Enterprise Architect](https://sparxsystems.com/enterprise-architect/index.html) (EA) project file containing the IWXXM-US Unified Modeling Language (UML) model. From this project file, IWXXM-US [schemas](https://nws.weather.gov/schemas/iwxxm-us) and documentation are created from Enterprise Architect. In addition to the project file, a python script with associated configuration files, specific to each product schema, are needed to 'post-process' the EA output to generate the final form of the schemas before posting to the IWXXM-US website.
 
 -------------------------------------------------------------------------------
 # Prerequisites
