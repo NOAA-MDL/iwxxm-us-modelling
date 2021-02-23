@@ -4,7 +4,7 @@ This repository is a scientific product and is not official communication of the
 
 ------------------------------------------
 # IWXXM-US Modelling
-This repository hosts an [Enterprise Architect](https://sparxsystems.com/enterprise-architect/index.html) (EA) project file containing the IWXXM-US Unified Modeling Language (UML) model. From this project file, IWXXM-US [schemas](https://nws.weather.gov/schemas/iwxxm-us) and documentation are created using Enterprise Architect's capabilities. In addition to the project file, a python script, with configuration files specific to each product schema, are needed to 'post-process' the EA output to generate the final form of the schemas before posting to the IWXXM-US [website](https://nws.weather.gov/schemas/iwxxm-us).
+This repository hosts an [Enterprise Architect](https://sparxsystems.com/enterprise-architect/index.html) (EA) project file, iwxxm-us-devel.eap, containing the IWXXM-US Unified Modeling Language (UML) model. From this project file, IWXXM-US [schemas](https://nws.weather.gov/schemas/iwxxm-us) and documentation are created using Enterprise Architect's capabilities. In addition to the project file, a python script, with configuration files specific to each product schema, are needed to 'post-process' the EA output to generate the final form of the schemas before posting to the IWXXM-US [website](https://nws.weather.gov/schemas/iwxxm-us).
 
 ## Prerequisites
 [Enterprise Architect](https://sparxsystems.com/enterprise-architect/index.html) is required to utilize the project file. A Python interpreter (v3.7 or better) is needed to run a script that post-processes the schemas generated from the EA application.
@@ -18,14 +18,14 @@ The following instructions assume you are using a computer with a Unix-based ope
 ## IWXXM-US Schema Generation
 From the EA application, and after the IWXXM-US UML project file is opened, the schema files are created from the Toolbar 'Specialize->GML->Generate GML Application Schema.' Please make sure the resulting schema files are written to the EA/ sub-directory.
 
-Once EA has written the schema files to the EA/ sub-directory, the python script in py/ sub-directory called postProcessEA.py, along with a schema configuration file as an argument, makes additional changes to put the schema in its final form. The python script's output is written to the /schemas sub-directory. The schema files in the schemas/ subdirectory can then be compared to what is posted on the IWXXM-US [website](https://nws.weather.gov/schemas/iwxxm-us) to verify the desired changes.
+Once Enterprise Architect has written the schema files to the EA/ sub-directory, the python script in py/ sub-directory called [postProcessEA.py](https://github.com/NOAA-MDL/iwxxm-us-modelling/blob/main/py/postProcessEA.py), along with a schema configuration file as an argument, makes additional changes to put the schema in its final form. The python script's output is written to the /schemas sub-directory. The schema files in the schemas/ subdirectory can then be compared to what is posted on the IWXXM-US [website](https://nws.weather.gov/schemas/iwxxm-us) to verify the desired changes.
 
 ## IWXXM-US Documentation Generation
 From the EA application, and after the IWXXM-US UML project file is opened, documentation of the UML model in HTML and PDF forms can be generated from the Toolbar 'Publish->HTML Report' and 'Publish->Documentation' respectively. The HTML documentation can be posted on the IWXXM-US website. (Can be found under a specific version, e.g. 3.0, and then sub-directory ['uml'](https://nws.weather.gov/schemas/iwxxm-us/3.0/uml)).
 
 Further instruction on Enterprise Architect's UML modelling tools is beyond the scope of this documentation.
 
-# IWXXM-US Changes
-Since the EA project file is in binary form, it is not possible to use some of Git features on the file. Comparisons and merging tools will not work, for instance. Hence GitHub issues associated with the EA project file must provide *precise* details on all changes to the UML model and resulting schema changes in order to verify the changes are as intended before posting to the public website.
+# IWXXM-US Evolution
+Since the Enterprise Architect project file is in binary form, it is not possible to use some of Git features on the file. Comparisons and merging tools will not work, for instance. Hence GitHub issues associated with the EA project file must provide *precise* details on all changes to the UML model and resulting schema changes in order to verify the changes are as intended before posting to the public website.
 
-Future changes to IWXXM-US schemas will be managed and vetted by the Committee on Services within the Interagency Council for Advancing Meteorological Services.
+Future changes to IWXXM-US schemas will be managed and vetted by the Committee on Services within the [Interagency Council for Advancing Meteorological Services](https://www.icams-portal.gov/index.html).
