@@ -26,6 +26,6 @@ From the EA application, and after the IWXXM-US UML project file is opened, docu
 Further instruction on Enterprise Architect's UML modelling tools is beyond the scope of this documentation.
 
 # IWXXM-US Evolution
-Since the Enterprise Architect project file is in binary form, it is not possible to use some of Git features on the file. Comparisons and merging tools will not work, for instance. Hence GitHub issues associated with the EA project file must provide *precise* details on all changes to the UML model and resulting schema changes in order to verify the changes are as intended before posting to the public website. Changes to the python post-processing and its configuration files can be tracked in the usual manner with git.
+Since the Enterprise Architect project file is in binary form, it is not possible to use some of Git features on the file. Comparisons and merging tools will not work, for instance. Hence GitHub issues associated with the EA project file must provide *precise* details on all changes to the UML model and resulting schema changes in order to verify the changes are as intended before posting to the public website. Changes to the python post-processing script and its configuration files can be tracked in the usual manner with git.
 
 Future changes to IWXXM-US schemas will be managed and vetted by the Committee on Services within the [Interagency Council for Advancing Meteorological Services](https://www.icams-portal.gov/index.html).
