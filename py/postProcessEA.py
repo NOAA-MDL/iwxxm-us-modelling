@@ -11,7 +11,11 @@
 # Code prerequsites: Python version >2.7 installed on local machine
 #
 import os, re, sys
-import configparser as cp
+try:
+    import configparser as cp
+except ImportError:
+    import ConfigParser as cp
+    
 import xml.etree.ElementTree as ET
 import xmlpp
 #
