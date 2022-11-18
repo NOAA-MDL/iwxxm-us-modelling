@@ -336,9 +336,9 @@ def cleanUpTree(root,nameSpaces,parentChildMap,ignoreElementNames):
     #
     # Find and remove elements that do not have children, no text nor attributes.
     while True:
-        parentChildMap = dict((c,p) for p in root.getiterator() for c in p)
+        parentChildMap = dict((c,p) for p in root.iter() for c in p)
         empties = []
-        for child in root.getiterator():
+        for child in root.iter():
             if len(child) == 0:
                 if child.attrib == {}:
                     if child.text == None or child.text.strip() == '':
@@ -387,10 +387,9 @@ def main(cfgfile, config):
         return
     
     try:
-        cwd = os.getcwd()
+        basedir = os.getcwd()
         #
         # Assumption: basedir is one directory up from current directory
-        basedir = cwd[:cwd.rfind(os.path.sep)]
         EADirectory = config.get('location','EADirectory')
         ReleaseDirectory = config.get('location','ReleaseDirectory')
         
@@ -446,7 +445,7 @@ def main(cfgfile, config):
         ignoreElementNames = []
     #
     # Important dictionary for traversing the EA schema document
-    parentChildMap = dict((c,p) for p in root.getiterator() for c in p)
+    parentChildMap = dict((c,p) for p in root.iter() for c in p)
 
     #
     # With instance or object diagrams in the Model, lots of cruft is generated as
