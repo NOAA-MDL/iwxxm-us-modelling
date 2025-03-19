@@ -18,6 +18,7 @@ except ImportError:
     
 import xml.etree.ElementTree as ET
 import xmlpp
+from lxml import etree
 #
 def parseAndGetNameSpaces(fname,References={}):
     #
@@ -378,13 +379,7 @@ def removeChildren(badChildren,parentChildMap):
         
     return cpy
 
-def main(cfgfile, config):
-    
-    try:
-        config.read(cfgfile)
-    except cp.ParsingError:
-        parser.error("Requires a valid configuration file: %s", cfgfile)
-        return
+def main(config):
     
     try:
         basedir = os.getcwd()
@@ -427,6 +422,7 @@ def main(cfgfile, config):
         
     except cp.NoSectionError:
         root, nameSpaces = parseAndGetNameSpaces(EASchemaFile)
+        return
         #
         # If a default namespace is present, then don't process further.
     if "" in nameSpaces:
@@ -553,12 +549,20 @@ def main(cfgfile, config):
 
 if __name__ == '__main__':
     #
-    config = cp.ConfigParser()
-    config.optionxform = str
     if len(sys.argv) == 1:
         print("Usage: %s cfgfile" % sys.argv[0])
-    else:
+        sys.exit(0)
     #
     # Read configuration files for each schema
-        for cfgfile in sys.argv[1:]:
-            main(cfgfile,config)
+    for cfgfile in sys.argv[1:]:
+        config = cp.ConfigParser()
+        config.optionxform = str
+        try:
+            config.read(cfgfile)
+            print(cfgfile, flush=True)
+            main(config)
+                
+        except cp.ParsingError:
+            parser.error("Requires a valid configuration file: %s", cfgfile)
+            continue
+    

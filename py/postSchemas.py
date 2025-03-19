@@ -105,36 +105,18 @@ if __name__ == '__main__':
     # As EA runs on Windows OS, this is how the root directory is determined.
     HOME = os.environ.get('USERPROFILE')
     #
-    try:
-        package = sys.argv[1]
-
-    except IndexError:
-        print('Missing package name, either "iwxxm-us" or "uswx" argument')
-        exit(1)
-    #
     # Starting from the HOME directory, build the paths to the schemas' initial
     # and final locations.
     #
-    if package == 'iwxxm-us':
-        
-        REPOSITORY = os.path.join(HOME, 'Repositories', 'iwxxm-us-modelling')
-        WEB_STAGING = os.path.join(HOME, 'Schemas', 'IWXXM-US', '3.0')
-        
-    elif package == 'uswx':
-
-        REPOSITORY = os.path.join(HOME, 'Repositories', 'uswx-modelling')
-        WEB_STAGING = os.path.join(HOME, 'Schemas', 'uswx', '2.0')
-
-    else:
-        print('Wrong package name, either "iwxxm-us" or "uswx" argument')
-        exit(1)
+    REPOSITORY = os.path.join(HOME, 'Repositories', 'iwxxm-us-modelling')
+    WEB_STAGING = os.path.join(HOME, 'Repositories', 'NWS_SchemaWebsite', 'iwxxm-us', '3.0')
     #
     # Many file comparison apps out there. Pick one that is available to you.
     # Should accept two filenames as command-line arguments.  This program
     # allows me to resolve the differences and save the changed file.
     #
     diffTool = os.path.join(os.environ.get('LOCALAPPDATA'), 'Programs',
-                            'Oxygen XML Developer 25', 'diffFiles.exe')
+                            'Oxygen XML Developer 27', 'diffFiles.exe')
 
     os.chdir(REPOSITORY)
     schemaFiles = listEADirectoryFiles()
