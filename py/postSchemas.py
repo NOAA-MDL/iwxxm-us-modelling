@@ -134,13 +134,14 @@ if __name__ == '__main__':
                                                                               response.status))
 
             except urllib.error.URLError as err_msg:
-                print('{} resulted in {}. Please investigate.'.format(element.text, err_msg))
+                print('{} resulted in {}. Please investigate.'.format(element.text))
                 
-        configParser = cp.ConfigParser()
-        configParser.optionxform = str
         cfgFile = os.path.join('py', schemaFile.replace('.xsd', '.cfg'))
-        
-        pea.main(cfgFile, configParser)
+        config = cp.ConfigParser()
+        config.optionxform = str
+        config.read(cfgFile)    
+
+        pea.main(config)
 
         diff_args = [' ', os.path.join(WEB_STAGING, schemaFile),
                      os.path.join(REPOSITORY, 'schemas', schemaFile)]

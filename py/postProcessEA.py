@@ -85,14 +85,14 @@ def fixCodeLists(root,nameSpaces,codeListsDic):
     if len(allCodeListNames) > 0:
         print('fixCodeLists: Unprocessed gml:CodeType(s) in schema: %s' % ' '.join(allCodeListNames))
               
-def changeElements(root,nameSpaces,changeDic,attribute):
+def changeElement(root,nameSpaces,changeDic,attribute):
     #
     # Construct attribute string in element
     searchString = './/xs:element[@%s="%%s"]' % attribute
     for key,value in changeDic.items():
         matches=[x for x in root.iterfind( searchString % key, nameSpaces)]
         if len(matches) == 0:
-            print('changeElements: No match for %s: %s,%s' % (attribute,key,value))
+            print('changeElement: No match for %s: %s,%s' % (attribute,key,value))
         #
         # For any matches found, change the data type attribute
         for m in matches:
@@ -129,6 +129,10 @@ def applyAdjustments(root,adjustmentDic,nameSpaces):
     for action in adjustmentDic:
         searchString = './/xs:element[@%s="%s"]' % (action['kind'],action['value'])
         element = root.find( searchString, nameSpaces)
+        if element is None:
+            print('Search string failed: %s' % searchString)
+            continue
+        
         for attrbName, attrbValue in zip(action['attributes'].split(','),
                                          action['values'].split(',')):
             element.attrib[attrbName] = attrbValue
@@ -257,7 +261,7 @@ def removeAbstractMemberTypes(root,nameSpaces,parentChildMap):
         # Descend into the tree . . .
         target = abstractMemberElement.find('.//xs:element',nameSpaces)
         try:
-            newElementType = '%sPropertyType' % target.attrib.get('ref')
+            newElementType = '%sType' % target.attrib.get('ref')
             #
             # Ascend the tree . . .
             parent = parentChildMap[abstractMemberElement]
@@ -382,9 +386,6 @@ def removeChildren(badChildren,parentChildMap):
 def main(config):
     
     try:
-        basedir = os.getcwd()
-        #
-        # Assumption: basedir is one directory up from current directory
         EADirectory = config.get('location','EADirectory')
         ReleaseDirectory = config.get('location','ReleaseDirectory')
         
@@ -392,6 +393,7 @@ def main(config):
         print(str(err))
         return
         
+    basedir = os.getcwd()
     EADirFullPath= os.path.join(basedir,EADirectory)            
     ReleaseFullPath = os.path.join(basedir,ReleaseDirectory)
     
@@ -422,7 +424,6 @@ def main(config):
         
     except cp.NoSectionError:
         root, nameSpaces = parseAndGetNameSpaces(EASchemaFile)
-        return
         #
         # If a default namespace is present, then don't process further.
     if "" in nameSpaces:
@@ -449,11 +450,12 @@ def main(config):
     # are cleaning up residual issues.
     
     cleanUpTree(root,nameSpaces,parentChildMap,ignoreElementNames)
+
     #
     # Fix elements' types as needed/configured
     try:
         dataTypesDic = dict([tuple(x[1].split()) for x in config.items('dataTypes')])
-        changeElements(root,nameSpaces,dataTypesDic,'type')
+        changeElement(root,nameSpaces,dataTypesDic,'type')
 
     except cp.NoSectionError:
         pass
@@ -469,7 +471,7 @@ def main(config):
     # Fix substitution groups
     try:
         subGroupsDic = dict(config.items('substitutionGroups'))
-        changeElements(root,nameSpaces,subGroupsDic,'substitutionGroup')
+        changeElement(root,nameSpaces,subGroupsDic,'substitutionGroup')
 
     except cp.NoSectionError:
         pass
@@ -550,19 +552,23 @@ def main(config):
 if __name__ == '__main__':
     #
     if len(sys.argv) == 1:
-        print("Usage: %s cfgfile" % sys.argv[0])
-        sys.exit(0)
+        print("Usage: %s product" % sys.argv[0])
+    else:
     #
     # Read configuration files for each schema
-    for cfgfile in sys.argv[1:]:
-        config = cp.ConfigParser()
-        config.optionxform = str
-        try:
-            config.read(cfgfile)
-            print(cfgfile, flush=True)
-            main(config)
+        orig_dir = os.getcwd()
+        
+        for product in sys.argv[1:]:
+            
+            config = cp.ConfigParser()
+            config.optionxform = str
+            cfgfile = '%s.cfg' % product
+            
+            if os.path.isfile(cfgfile):
                 
-        except cp.ParsingError:
-            parser.error("Requires a valid configuration file: %s", cfgfile)
-            continue
-    
+                config.read(cfgfile)    
+                os.chdir('..')
+                main(config)
+                os.chdir(orig_dir)
+                
+            del config
