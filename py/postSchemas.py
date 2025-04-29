@@ -134,7 +134,7 @@ if __name__ == '__main__':
                                                                               response.status))
 
             except urllib.error.URLError as err_msg:
-                print('{} resulted in {}. Please investigate.'.format(element.text))
+                print('{} resulted in {}. Please investigate.'.format(element.text, err_msg))
                 
         cfgFile = os.path.join('py', schemaFile.replace('.xsd', '.cfg'))
         config = cp.ConfigParser()
